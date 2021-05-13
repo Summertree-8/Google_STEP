@@ -82,11 +82,7 @@ public class FindAnagram {
 	        File newwordsfile = new File("newwords.txt");
 	        FileWriter fileWriter = new FileWriter(newwordsfile);
 	        BufferedWriter bw = new BufferedWriter(fileWriter);
-//	        for(int i = 0; i < MAX; i++) {
-//	        	fileWriter.write();
-//	        	fileWriter.newLine();
-//	        }
-	      //FileInputStreamクラスのオブジェクトを生成
+
             FileInputStream inStream = new FileInputStream(wordsfile);
             FileOutputStream outStream = new FileOutputStream(newwordsfile);
             byte[] buf = new byte[256];
