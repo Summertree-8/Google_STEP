@@ -17,35 +17,48 @@ public class FindAnagram {
 
 	public static void main(String[] args) {
 
-		// 単語ファイル読み込む
-		try {
+		// 単語を読み込む
+		Scanner scan = new Scanner(System.in);
+        String random_word = scan.nextLine();
+        scan.close();
+
+		//新しい辞書を読み込む
+	    try {
+	    	File file = new File("newwords.txt");
+			FileReader fr = new FileReader(file);
+			BufferedReader br = new BufferedReader(fr);
+			String str = "";
+			while (true) {
+				String s = br.readLine();
+				System.out.println(betterSolution(random_word, new_dictionary));
+				if (s==null) break;
+			}
+			fr.close();
 
 		} catch (Exception e) {
 		     e.printStackTrace();
 	    }
-		String betterSolution(RandomWord, Dictionary);
-
 
     }
 
 	// アナグラムを見つける
-	static String betterSolution(String RandomWord, String Dictionary) {
+	static String betterSolution(String random_word, String new_dictionary[]) {
 	    //文字列をソート
-	    char[] charRandomWord = RandomWord.toCharArray();
+	    char[] charRandomWord = random_word.toCharArray();
 	    Arrays.sort(charRandomWord);
-	    String SortedRandomWord = new String(charRandomWord);
-
-	    //新しい辞書を読み込む
+	    String sorted_random_word = new String(charRandomWord);
 
 	    //二分探索
-	    return (BinarySearch(SortedRandomWord, NewDictionary));
+	    String anagram = BinarySearch(sorted_random_word, new_dictionary);
+
+	    return anagram;
 	}
 
 	//新しい辞書を作成
     static void makeNewDictionary(File newwordsFile){
 	    try{
 		    //辞書ファイルを読み込む
-	        File wordsfile = new File("C:\\Users\\xingyun\\Documents\\workspace\\Temp\\src\\week1\\words.txt");
+	        File wordsfile = new File("https://github.com/xharaken/step2/tree/master/anagram/words.txt");
 	        FileReader fileReader = new FileReader(wordsfile);
 	        BufferedReader bufferedReader = new BufferedReader (fileReader);
 	        String data= bufferedReader.readLine();
@@ -56,7 +69,7 @@ public class FindAnagram {
 	        }
 
 	        //新しい辞書ファイルに書き込む
-	        FileWriter fileWriter = new FileWriter("test.txt");
+	        FileWriter fileWriter = new FileWriter("newwords.txt");
 	        BufferedWriter bw=new BufferedWriter(new FileWriter(newwordsFile));
 	        for() {
 	        	fileWriter.write();
@@ -70,7 +83,7 @@ public class FindAnagram {
     }
 
 	//二分探索
-	static String BinarySearch(String SortedRandomWord, String NewDictionary) {
+	static String BinarySearch(String sorted_random_word, String new_dictionary[]) {
     	int left = 0;
 	    int right = MAX;
 	    String anagram = "";
@@ -78,11 +91,11 @@ public class FindAnagram {
 	    while (left <= right) {
 	      int middle = (left + right) / 2;
 
-	      if (SortedRandomWord == NewDictionary) {
-	        anagram = NewDictionary[middle];
+	      if (sorted_random_word == new_dictionary[middle]) {
+	        anagram = new_dictionary[middle];
 	        break;
 	      }
-	      else if (SortedRandomWord < NewDictionary) {
+	      else if (sorted_random_word.compareTo(new_dictionary[middle]) < 0) {
 	        right = middle;
 	      }
 	      else {
