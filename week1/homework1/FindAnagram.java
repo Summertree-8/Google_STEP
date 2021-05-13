@@ -1,3 +1,5 @@
+//エラー未解決です、、
+
 package week1;
 
 import java.io.BufferedReader;
@@ -16,11 +18,12 @@ import java.util.Scanner;
 public class FindAnagram {
 
 	static int MAX = 84093;
-	static String new_dictionary[];
+	static String new_dictionary[] = new String [MAX];
 
 	public static void main(String[] args) {
 
 		// 単語を読み込む
+		System.out.println("input random word\n");
 		Scanner scan = new Scanner(System.in);
         String random_word = scan.nextLine();
         scan.close();
@@ -35,10 +38,10 @@ public class FindAnagram {
 			int i = 0;
 			while (br.ready()) {
 				String s = br.readLine();
+				if (s == null) break;
+				System.out.println("here!!\n"+i);
 				new_dictionary[i] = s;
 				i++;
-//				System.out.println(betterSolution(random_word, new_dictionary));
-//				if (s==null) break;
 			}
 			fr.close();
 
@@ -67,15 +70,15 @@ public class FindAnagram {
     static void makeNewDictionary(){
 	    try{
 		    //辞書ファイルを読み込む
-	        File wordsfile = new File("https://github.com/xharaken/step2/tree/master/anagram/words.txt");
+	        File wordsfile = new File("C:\\Users\\xingyun\\Documents\\workspace\\Temp\\src\\week1\\words.txt");
 	        FileReader fileReader = new FileReader(wordsfile);
 	        BufferedReader bufferedReader = new BufferedReader (fileReader);
 	        ArrayList<String> sorted = new ArrayList<>();
 
 	       //辞書ファイル内の単語をソート
 	        for(int i = 0; i < MAX; i++) {
-	        	 String data= bufferedReader.readLine();
-	 	         char[] c = data.toCharArray();
+	        	 String sorte = bufferedReader.readLine();
+	 	         char[] c = sorte.toCharArray();
 	 	         Arrays.sort(c);
 	 	         String sortword = new String(c);
 	 	         sorted.add(sortword);
@@ -126,6 +129,5 @@ public class FindAnagram {
 	    }
 	    return anagram;
     }
-
 
 }
