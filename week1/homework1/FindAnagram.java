@@ -16,8 +16,7 @@ import java.util.Scanner;
 public class FindAnagram {
 
 	static int MAX = 84093;
-	static String array1[];
-	static String array2[];
+	static String new_dictionary[];
 
 	public static void main(String[] args) {
 
@@ -26,22 +25,28 @@ public class FindAnagram {
         String random_word = scan.nextLine();
         scan.close();
 
+        makeNewDictionary();
+
 		//新しい辞書を読み込む
 	    try {
 	    	File file = new File("newwords.txt");
 			FileReader fr = new FileReader(file);
 			BufferedReader br = new BufferedReader(fr);
-			String str = "";
-			while (true) {
+			int i = 0;
+			while (br.ready()) {
 				String s = br.readLine();
-				System.out.println(betterSolution(random_word, new_dictionary));
-				if (s==null) break;
+				new_dictionary[i] = s;
+				i++;
+//				System.out.println(betterSolution(random_word, new_dictionary));
+//				if (s==null) break;
 			}
 			fr.close();
 
 		} catch (Exception e) {
 		     e.printStackTrace();
 	    }
+
+	    System.out.println(betterSolution(random_word, new_dictionary));
 
     }
 
@@ -59,7 +64,7 @@ public class FindAnagram {
 	}
 
 	//新しい辞書を作成
-    static void makeNewDictionary(File newwordsFile){
+    static void makeNewDictionary(){
 	    try{
 		    //辞書ファイルを読み込む
 	        File wordsfile = new File("https://github.com/xharaken/step2/tree/master/anagram/words.txt");
