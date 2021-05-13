@@ -3,10 +3,14 @@ package week1;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class FindAnagram {
@@ -61,19 +65,36 @@ public class FindAnagram {
 	        File wordsfile = new File("https://github.com/xharaken/step2/tree/master/anagram/words.txt");
 	        FileReader fileReader = new FileReader(wordsfile);
 	        BufferedReader bufferedReader = new BufferedReader (fileReader);
-	        String data= bufferedReader.readLine();
+	        ArrayList<String> sorted = new ArrayList<>();
 
-	        //辞書ファイルをソート
-	        while(data != null) {
-	        	data
+	       //辞書ファイル内の単語をソート
+	        for(int i = 0; i < MAX; i++) {
+	        	 String data= bufferedReader.readLine();
+	 	         char[] c = data.toCharArray();
+	 	         Arrays.sort(c);
+	 	         String sortword = new String(c);
+	 	         sorted.add(sortword);
 	        }
+	        //辞書ファイルをソート
+	        Collections.sort(sorted);
 
 	        //新しい辞書ファイルに書き込む
-	        FileWriter fileWriter = new FileWriter("newwords.txt");
-	        BufferedWriter bw=new BufferedWriter(new FileWriter(newwordsFile));
-	        for() {
-	        	fileWriter.write();
-	        }
+	        File newwordsfile = new File("newwords.txt");
+	        FileWriter fileWriter = new FileWriter(newwordsfile);
+	        BufferedWriter bw = new BufferedWriter(fileWriter);
+//	        for(int i = 0; i < MAX; i++) {
+//	        	fileWriter.write();
+//	        	fileWriter.newLine();
+//	        }
+	      //FileInputStreamクラスのオブジェクトを生成
+            FileInputStream inStream = new FileInputStream(wordsfile);
+            FileOutputStream outStream = new FileOutputStream(newwordsfile);
+            byte[] buf = new byte[256];
+            int len;
+            while((len = inStream.read(buf)) != -1){
+            	outStream.write(buf);
+            }
+            outStream.flush();
 	        fileWriter.close();
 	        fileReader.close();
 
