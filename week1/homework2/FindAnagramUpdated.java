@@ -28,11 +28,20 @@ public class FindAnagramUpdated {
 			BufferedReader br = new BufferedReader(fr);
 			while (br.ready()) {
 				String s = br.readLine();
+				// 辞書の各単語に対してアナグラムを見つける
+				for() {
+					find_anagram(,)
+				}
 			}
 			br.close();
 		} catch (Exception e) {
 		     e.printStackTrace();
 	    }
+		//新しいファイルに出力
+	}
+
+	static void find_anagram(String ramdom_word, String dictionary_word) {
+
 	}
 
 	static int[] count_char(String x) {
@@ -49,14 +58,7 @@ public class FindAnagramUpdated {
 		return count;
 	}
 
-	int charScore[] = {1, 3, 2, 2, 1, 3, 3, 1, 1, 4, 4, 2, 2, 1, 1, 3, 4, 1, 1, 1, 2, 3, 3, 4, 3, 4};
-
-		//ファイルから文字列に
-		//文字列からcharに
-	    //アルファベットごとの点数
-		//単語を作る
-		//点数が高いものがあるか判定
-		//更新
-		//新しいファイルに出力
+	//アルファベットごとの点数
+	int char_score[] = {1, 3, 2, 2, 1, 3, 3, 1, 1, 4, 4, 2, 2, 1, 1, 3, 4, 1, 1, 1, 2, 3, 3, 4, 3, 4};
 
 }
