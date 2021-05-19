@@ -4,8 +4,7 @@ class Matrix {
 
 	public static void main(String[] args) {
 		Matrix m = new Matrix();
-		//		for (int i = 1; i <= 1000; i=i+3) {
-		for (int i = 1; i <= 500; i++) {
+		for (int i = 1; i <= 1000; i = i + 3) {
 			m.runMatrix(i);
 		}
 
