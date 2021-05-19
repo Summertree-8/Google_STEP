@@ -1,13 +1,22 @@
 package week2;
 
-public class Matrix {
+class Matrix {
 
 	public static void main(String[] args) {
-		if (args.length != 1) {
-			System.out.println("usage: java Matrix N");
-			return;
+		Matrix m = new Matrix();
+		//		for (int i = 1; i <= 1000; i=i+3) {
+		for (int i = 1; i <= 500; i++) {
+			m.runMatrix(i);
 		}
-		int n = Integer.parseInt(args[0]);
+
+	}
+
+	public static void runMatrix(int n) {
+		//				if (args.length != 1) {
+		//					System.out.println("usage: java Matrix N");
+		//					return;
+		//				}
+		//				int n = Integer.parseInt(args[0]);
 
 		double[][] a = new double[n][n]; // Matrix A
 		double[][] b = new double[n][n]; // Matrix B
@@ -42,13 +51,14 @@ public class Matrix {
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {
 				sum += c[i][j];
-				// System.out.printf("c[%d][%d]=%f\n", i, j, c[i][j]);
+				//				 System.out.printf("c[%d][%d]=%f\n", i, j, c[i][j]);
+				//				 System.out.printf("a[%d][%d]=%f\n", i, j, a[i][j]);
+				//				 System.out.printf("b[%d][%d]=%f\n", i, j, b[i][j]);
 			}
 		}
 		// Print out the sum of all values in C.
 		// This should be 450 for N=3, 3680 for N=4, and 18250 for N=5.
 		System.out.printf("sum: %.6f\n", sum);
-
 	}
 
 }
