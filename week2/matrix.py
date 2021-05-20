@@ -22,7 +22,7 @@ begin = time.time()
 for i in range(n):
     for j in range(n):
         for k in range(n):
-            c[i, j] = c[i, j] + a[i, k] * b[k, j]
+            c[i, j] += a[i, k] * b[k, j]
 
 
 end = time.time()
@@ -37,4 +37,3 @@ for i in range(n):
 # Print out the sum of all values in C.
 # This should be 450 for N=3, 3680 for N=4, and 18250 for N=5.
 print("sum: %.6f" % total)
-
