@@ -25,7 +25,7 @@ public class FindAnagram {
 		// 単語を読み込む
 		System.out.println("input random word\n");
 		Scanner scan = new Scanner(System.in);
-        String random_word = scan.nextLine();
+        String randomWord = scan.nextLine();
         scan.close();
 
         makeNewDictionary();
@@ -49,7 +49,7 @@ public class FindAnagram {
 		     e.printStackTrace();
 	    }
 
-	    System.out.println(betterSolution(random_word, new_dictionary));
+	    System.out.println(betterSolution(randomWord, newDictionary));
 
     }
 
@@ -61,7 +61,7 @@ public class FindAnagram {
 	    String sorted_random_word = new String(charRandomWord);
 
 	    //二分探索
-	    String anagram = BinarySearch(sorted_random_word, new_dictionary);
+	    String anagram = binarySearch(sorted_random_word, new_dictionary);
 
 	    return anagram;
 	}
@@ -87,8 +87,8 @@ public class FindAnagram {
 	        Collections.sort(sorted);
 
 	        //新しい辞書ファイルに書き込む
-	        File newwordsfile = new File("newwords.txt");
-	        FileWriter fileWriter = new FileWriter(newwordsfile);
+	        File newWordsFile = new File("newwords.txt");
+	        FileWriter fileWriter = new FileWriter(newWordsFile);
 	        BufferedWriter bw = new BufferedWriter(fileWriter);
 
             FileInputStream inStream = new FileInputStream(wordsfile);
@@ -116,8 +116,8 @@ public class FindAnagram {
 	    while (left <= right) {
 	      int middle = (left + right) / 2;
 
-	      if (sorted_random_word == new_dictionary[middle]) {
-	        anagram = new_dictionary[middle];
+	      if (sorted_random_word == newDictionary[middle]) {
+	        anagram = newDictionary[middle];
 	        break;
 	      }
 	      else if (sorted_random_word.compareTo(new_dictionary[middle]) < 0) {
