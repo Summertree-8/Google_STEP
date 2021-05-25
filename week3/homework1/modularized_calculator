@@ -66,17 +66,15 @@ def evaluate(tokens):
         if tokens[index]['type'] == 'NUMBER':
             if tokens[index - 1]['type'] == 'TIMES':
                 tokens[index-2]['number'] = tokens[index-2]['number']*tokens[index]['number']
-                del tokens[index-1]
                 del tokens[index]
+                del tokens[index-1]
                 index -= 1
-#                 answer *= tokens[index]['number']
             elif tokens[index - 1]['type'] == 'DIVISION':
                 tokens[index-2]['number'] = tokens[index-2]['number']/tokens[index]['number']
-                del tokens[index-1]
                 del tokens[index]
+                del tokens[index-1]
                 index -= 1
-#                 answer /= tokens[index]['number']
-            index += 1
+        index += 1
 
     index = 1
     while index < len(tokens):
