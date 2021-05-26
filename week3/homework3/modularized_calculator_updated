@@ -1,5 +1,3 @@
-# homework3_1
-
 #! /usr/bin/python3
 # from numpy.core.defchararray import index
 
@@ -73,80 +71,61 @@ def tokenize(line):
         tokens.append(token)
     return tokens
 
-#evaluate most inside bracket
+
 def evaluate_inbaracket(tokens):
-    print("start find bracket")
-    #find_brackets
     index = 0
-    bracket_l = 0
-    bracket_r = 0
+    inbracket_evaluated = []
     while index < len(tokens):
-        if tokens[index]['type'] == 'BRACKET_LEFT':
-            bracket_l = index
-        elif tokens[index]['type'] == 'BRACKET_RIGHT':
-            bracket_r = index
-        else: return 1
-
-    inbracket = []
-    evaluated = []
-
-    print("start evaluate bracket")
-    #evaluate_inbaracket
-    tokens[bracket_l]['number'] = evaluate_operator(tokens, bracket_l, bracket_r)
-    for i in range(bracket_r - bracket_l):
-        del tokens[bracket_r - (i-1)]
-    index += 1
-    return tokens
+        if tokens[index]['type'] == 'BRACKET_RIGHT':
+            inbracket = []
+            while(inbracket_evaluated[-1]['type'] != 'BRACKET_LEFT'):
+                inbracket.insert(0, inbracket_evaluated.pop())
+            inbracket_evaluated.pop()
+            inbracket_evaluated.append({'type': 'NUMBER', 'number': evaluate(inbracket)})
+        else:
+            inbracket_evaluated.append(tokens[index])
+        index += 1
+    return inbracket_evaluated
 
 
 #evaluate */+-
-def evaluate_operator(tokens, start, end):
-    tmp_answer = 0
+def evaluate_operator(tokens):
+    operator_evaluated = 0
     tokens.insert(0, {'type': 'PLUS'}) # Insert a dummy '+' token
-    index = start+1
+    index = 1
 
-    while index <= end:
-        print('------index = %d' % index)
+    while index < len(tokens):
         if tokens[index]['type'] == 'NUMBER':
-            print("is number")
             if tokens[index - 1]['type'] == 'TIMES':
-                print("---times")
                 tokens[index-2]['number'] = tokens[index-2]['number']*tokens[index]['number']
                 del tokens[index]
                 del tokens[index-1]
                 index -= 1
             elif tokens[index - 1]['type'] == 'DIVISION':
-                print("----------division")
                 tokens[index-2]['number'] = tokens[index-2]['number']/tokens[index]['number']
                 del tokens[index]
                 del tokens[index-1]
                 index -= 1
         index += 1
 
-    index = start
+    index = 1
     while index < len(tokens):
         if tokens[index]['type'] == 'NUMBER':
             if tokens[index - 1]['type'] == 'PLUS':
-                print("-----plus")
-                tmp_answer += tokens[index]['number']
+                operator_evaluated += tokens[index]['number']
             elif tokens[index - 1]['type'] == 'MINUS':
-                print("-----minus")
-                tmp_answer -= tokens[index]['number']
+                operator_evaluated -= tokens[index]['number']
             else:
                 print('Invalid syntax')
                 exit(1)
         index += 1
-    return tmp_answer
+    return operator_evaluated
 
 
 def evaluate(tokens):
-    while (evaluate_inbaracket(tokens) != 1):
-        evaluate_inbaracket(tokens)
-        print("-----in bracket")
-
-    answer = evaluate_operator(tokens, 0, len(tokens)-1)
+    inbracket_evaluated = evaluate_inbaracket(tokens)
+    answer = evaluate_operator(inbracket_evaluated)
     return answer
-
 
 
 def test(line):
@@ -177,6 +156,11 @@ def run_test():
     test("2000/200+0.55+5-8*3*3.0*0.3")
 
     test("(1+5)")
+    test("(3+5)*(7-3)")
+    test("3*((5+10)-10)")
+    test("-(3+5)*8-0.5")
+    test("1/8*(2)")
+    test("-(3-(5*6/(27*7-25/0.4)-(8-2)*4-9))*0.3")
 
     print("==== Test finished! ====\n")
 
