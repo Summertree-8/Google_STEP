@@ -1,4 +1,7 @@
+# homework3_1
+
 #! /usr/bin/python3
+# from numpy.core.defchararray import index
 
 def read_number(line, index):
     number = 0
@@ -36,6 +39,16 @@ def read_division(line, index):
     return token, index + 1
 
 
+def read_bracket_left(line, index):
+    token = {'type': 'BRACKET_LEFT'}
+    return token, index + 1
+
+
+def read_braket_right(line, index):
+    token = {'type': 'BRACKET_RIGHT'}
+    return token, index + 1
+
+
 def tokenize(line):
     tokens = []
     index = 0
@@ -50,46 +63,90 @@ def tokenize(line):
             (token, index) = read_times(line, index)
         elif line[index] == '/':
             (token, index) = read_division(line, index)
+        elif line[index] == '(':
+            (token, index) = read_bracket_left(line, index)
+        elif line[index] == ')':
+            (token, index) = read_braket_right(line, index)
         else:
             print('Invalid character found: ' + line[index])
             exit(1)
         tokens.append(token)
     return tokens
 
-
-def evaluate(tokens):
-    answer = 0
-    tokens.insert(0, {'type': 'PLUS'}) # Insert a dummy '+' token
-    index = 1
-
+#evaluate most inside bracket
+def evaluate_inbaracket(tokens):
+    print("start find bracket")
+    #find_brackets
+    index = 0
+    bracket_l = 0
+    bracket_r = 0
     while index < len(tokens):
-        if tokens[index]['type'] == 'NUMBER':
-            if tokens[index - 1]['type'] == 'TIMES':
-                tokens[index-2]['number'] = tokens[index-2]['number']*tokens[index]['number']
-                del tokens[index-1]
-                del tokens[index]
-                index -= 1
-#                 answer *= tokens[index]['number']
-            elif tokens[index - 1]['type'] == 'DIVISION':
-                tokens[index-2]['number'] = tokens[index-2]['number']/tokens[index]['number']
-                del tokens[index-1]
-                del tokens[index]
-                index -= 1
-#                 answer /= tokens[index]['number']
-            index += 1
+        if tokens[index]['type'] == 'BRACKET_LEFT':
+            bracket_l = index
+        elif tokens[index]['type'] == 'BRACKET_RIGHT':
+            bracket_r = index
+        else: return 1
 
-    index = 1
+    inbracket = []
+    evaluated = []
+
+    print("start evaluate bracket")
+    #evaluate_inbaracket
+    tokens[bracket_l]['number'] = evaluate_operator(tokens, bracket_l, bracket_r)
+    for i in range(bracket_r - bracket_l):
+        del tokens[bracket_r - (i-1)]
+    index += 1
+    return tokens
+
+
+#evaluate */+-
+def evaluate_operator(tokens, start, end):
+    tmp_answer = 0
+    tokens.insert(0, {'type': 'PLUS'}) # Insert a dummy '+' token
+    index = start+1
+
+    while index <= end:
+        print('------index = %d' % index)
+        if tokens[index]['type'] == 'NUMBER':
+            print("is number")
+            if tokens[index - 1]['type'] == 'TIMES':
+                print("---times")
+                tokens[index-2]['number'] = tokens[index-2]['number']*tokens[index]['number']
+                del tokens[index]
+                del tokens[index-1]
+                index -= 1
+            elif tokens[index - 1]['type'] == 'DIVISION':
+                print("----------division")
+                tokens[index-2]['number'] = tokens[index-2]['number']/tokens[index]['number']
+                del tokens[index]
+                del tokens[index-1]
+                index -= 1
+        index += 1
+
+    index = start
     while index < len(tokens):
         if tokens[index]['type'] == 'NUMBER':
             if tokens[index - 1]['type'] == 'PLUS':
-                answer += tokens[index]['number']
+                print("-----plus")
+                tmp_answer += tokens[index]['number']
             elif tokens[index - 1]['type'] == 'MINUS':
-                answer -= tokens[index]['number']
+                print("-----minus")
+                tmp_answer -= tokens[index]['number']
             else:
                 print('Invalid syntax')
                 exit(1)
         index += 1
+    return tmp_answer
+
+
+def evaluate(tokens):
+    while (evaluate_inbaracket(tokens) != 1):
+        evaluate_inbaracket(tokens)
+        print("-----in bracket")
+
+    answer = evaluate_operator(tokens, 0, len(tokens)-1)
     return answer
+
 
 
 def test(line):
@@ -107,6 +164,7 @@ def run_test():
     print("==== Test started! ====")
     test("1+2")
     test("1.0+2.1-3")
+    test("-5-6-7.9")
 
     test("3*5")
     test("10*10000*0.99999")
@@ -117,6 +175,8 @@ def run_test():
 
     test("1+2.5-3/1.0+20*5")
     test("2000/200+0.55+5-8*3*3.0*0.3")
+
+    test("(1+5)")
 
     print("==== Test finished! ====\n")
 
