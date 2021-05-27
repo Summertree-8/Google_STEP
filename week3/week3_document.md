@@ -36,27 +36,25 @@
   
 ##### ・説明  
 　　”inbracket_evaluated”：最終的に括弧内を計算し終えた式が入る  
-　　”inbracket”：括弧の内側にある式  
+　　”inbracket”：括弧の内側にある式が入る  
     
-　　はじめて右括弧が見つかったとき、  
-　　対応する左括弧(リストを戻った時に最初に現れる左括弧）を見つける。  
-　　括弧内の計算を行う。  
-  　inbracket_evaluatedの計算される部分の要素を左括弧にたどり着くまで後ろから取り出し、inbracketの前に順次入れる。  
-  　inbracketの計算結果をinbracket_evaluatedの左括弧のあった位置に入れる。このとき、(の次から）まではinbracket_evaluated.popによって削除されている。
-  　引き続き右括弧を探す。  
+　　右括弧が見つかったとき、対応する左括弧(リストを戻った時に最初に現れる左括弧）を見つける。    
+　　左括弧にたどり着くまで、inbracket_evaluatedの計算される部分の要素を後ろから取り出し、inbracketの1番前に順次入れる。  
+　　inbracketの計算結果をinbracket_evaluatedの左括弧のあった位置に入れる。このとき、(の次から）まではinbracket_evaluated.popによって削除されている。  
+　　引き続き右括弧を探す。  
 
 （例)  
 | index | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
 ----|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | tokens | 3 |* | ( | ( | 5 | + | 10 | ) | - | 10 | ) |
-| inbracket_evaluated | 3 |* | ( | ( | 5 | + | 10 | 
-| inbracket_evaluated | 3 |* | ( | 
+| inbracket_evaluated（右括弧が見つかった） | 3 |* | ( | ( | 5 | + | 10 | 
+| inbracket_evaluated（計算される部分の取り出し） | 3 |* | ( | 
 | inbracket | 5 | + | 10 |
-| inbracket_evaluated | 3 |* | ( | 15 |
-| inbracket_evaluated | 3 |* | ( | 15 | - | 10 | 
-| inbracket_evaluated | 3 |* 
+| inbracket_evaluated（計算結果を入れる） | 3 |* | ( | 15 |
+| inbracket_evaluated（右括弧が見つかった） | 3 |* | ( | 15 | - | 10 | 
+| inbracket_evaluated（計算される部分の取り出し） | 3 |* 
 | inbracket | 15 | - | 10 |
-| inbracket_evaluated | 3 |* | 5 | 
+| inbracket_evaluated（計算結果を入れる） | 3 |* | 5 | 
 | inbracket_evaluated | 15 |  
   
 
