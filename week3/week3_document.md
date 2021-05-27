@@ -39,11 +39,11 @@
 　　”inbracket”：括弧の内側にある式  
     
 　　はじめて右括弧が見つかったとき、  
-　　対応する左括弧(リストを戻った時に最初に現れる左括弧）を見つける  
-　　括弧内の計算を行う。このとき、inbracket_evaluatedの計算される部分の要素を取り出し、inbracketに入れる。inbracketの計算結果をinbracket_evaluatedの左括弧のあった位置に
-
-##### ・補足  
-　　括弧内の計算をするときに、inbracket_evaluatedの計算される部分の削除を同時に行う  
+　　対応する左括弧(リストを戻った時に最初に現れる左括弧）を見つける。  
+　　括弧内の計算を行う。  
+  　inbracket_evaluatedの計算される部分の要素を左括弧にたどり着くまで後ろから取り出し、inbracketの前に順次入れる。  
+  　inbracketの計算結果をinbracket_evaluatedの左括弧のあった位置に入れる。このとき、(の次から）まではinbracket_evaluated.popによって削除されている。
+  　引き続き右括弧を探す。  
 
 （例)  
 | index | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
