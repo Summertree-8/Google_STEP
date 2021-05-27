@@ -40,7 +40,7 @@
     
 　　右括弧が見つかったとき、対応する左括弧(リストを戻った時に最初に現れる左括弧）を見つける。    
 　　左括弧にたどり着くまで、inbracket_evaluatedの計算される部分の要素を後ろから取り出し、inbracketの1番前に順次入れる。  
-　　inbracketの計算結果をinbracket_evaluatedの左括弧のあった位置に入れる。このとき、(の次から）まではinbracket_evaluated.popによって削除されている。  
+　　inbracketの計算結果をinbracket_evaluatedの左括弧のあった位置に入れる。このとき、左括弧の次から右括弧まではinbracket_evaluated.popによって削除されている。  
 　　引き続き右括弧を探す。  
 
 （例)  
