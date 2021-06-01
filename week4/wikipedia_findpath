@@ -28,7 +28,7 @@ def find_page_id(pages, links):
         if v == 'Google':
             print('Start_id Google', k)
             start_id = k;
-        if v == 'じゃんけん':
+        if v == '深海':
             end_id = k;
             print('end_id = ', end_id)
     return start_id, end_id;
@@ -47,24 +47,42 @@ def find_end_page(connected, end_id):
     return (end_id in connected)
 
 
+def visited_pages(visited, page_id):
+#     visited.append(page_id)
+    return(page_id in visited)
+
+
 #
 def find_connected_page(pages, links, start_id, end_id):
     Q = [start_id]
+    visited = []
     print('Q = ',Q)
     while (len(Q) != 0):
         page_id = Q.pop(-1)
+        visited.append(page_id)
+        print('visited = ',visited)
         print('Q_poped = ',Q)
         print('page_id = ',page_id)
-        connect = list_of_connected(links, page_id)
-        print('connect = ', connect)
-        if(find_end_page(connect, end_id) == True):
+        connected = list_of_connected(links, page_id)
+        print('connected = ', connected)
+        if(find_end_page(connected, end_id) == True):
             print("found!!")
             break;
         else:
             print("not found.....")
-            while(len(connect) != 0):
-                Q.insert(0, connect.pop())
+            while(len(connected) != 0):
+                print('last connected',connected[-1])
+                print('visited list', visited)
+                print('visited or not:',visited_pages(visited, connected[-1]))
+                if(visited_pages(visited, connected[-1]) != True):
+                    Q.insert(0, connected.pop())
+                else:
+                    connected.pop()
         print('Q1 = ',Q)
+
+
+# def show_path():
+
 
 
 def main():
