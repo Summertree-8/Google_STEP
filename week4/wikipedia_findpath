@@ -28,7 +28,7 @@ def find_page_id(pages, links):
         if v == 'Google':
             print('Start_id Google', k)
             start_id = k;
-        if v == '深海':
+        if v == 'じゃんけん':
             end_id = k;
             print('end_id = ', end_id)
     return start_id, end_id;
@@ -38,8 +38,8 @@ def find_page_id(pages, links):
 def list_of_connected(links, page_id):
     for k, v in links.items():
         if k == page_id:
-            connected = list(v)
-    return connected
+            connect = list(v)
+    return connect
 
 
 #Examine whether it is the page looking for
@@ -48,7 +48,6 @@ def find_end_page(connected, end_id):
 
 
 def visited_pages(visited, page_id):
-#     visited.append(page_id)
     return(page_id in visited)
 
 
@@ -56,32 +55,52 @@ def visited_pages(visited, page_id):
 def find_connected_page(pages, links, start_id, end_id):
     Q = [start_id]
     visited = []
+    path = {}
+    pre_connected = []
+    toppage = start_id
     print('Q = ',Q)
     while (len(Q) != 0):
+        #Qの最後取り出す
         page_id = Q.pop(-1)
-        visited.append(page_id)
-        print('visited = ',visited)
-        print('Q_poped = ',Q)
+#         print('Q_poped = ',Q)
         print('page_id = ',page_id)
+
+        #page_idが見ているページのidたち
         connected = list_of_connected(links, page_id)
         print('connected = ', connected)
+
+        #visitedに追加
+        visited.append(page_id)
+        print('visited = ',visited)
+
+        if(page_id in pre_connected):
+            toppage = page_id
+        print('top=',toppage)
+        pre_connected = []
+
+        #目標のページが見つかった
         if(find_end_page(connected, end_id) == True):
             print("found!!")
             break;
         else:
             print("not found.....")
+            if(len(connected) == 0):
+                break;
+            #visitedで無ければQの最初に追加
             while(len(connected) != 0):
-                print('last connected',connected[-1])
-                print('visited list', visited)
-                print('visited or not:',visited_pages(visited, connected[-1]))
                 if(visited_pages(visited, connected[-1]) != True):
+#                     print(page_id)
+#                     print(connected[-1])
+                    pre_connected.append(connected[-1])
+#                     path.setdefault(page_id, []).append(visited[-1])
+#                     print('path = ',path)
                     Q.insert(0, connected.pop())
                 else:
                     connected.pop()
-        print('Q1 = ',Q)
+        print("pre_connected = ",pre_connected)
+#         print(connected)
+#         print('Q_after = ',Q)
 
-
-# def show_path():
 
 
 
