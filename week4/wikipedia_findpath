@@ -1,0 +1,77 @@
+#! usr/bin/python3
+# -*- coding: utf-8 -*-
+
+def open_file():
+    pages = {}
+    links = {}
+
+    with open('data/pages_small.txt' ,encoding="utf8", errors='ignore') as f:
+        for data in f.read().splitlines():
+            page = data.split('\t')
+            # page[0]: id, page[1]: title
+            pages[page[0]] = page[1]
+
+    with open('data/links_small.txt' ,encoding="utf8", errors='ignore') as f:
+        for data in f.read().splitlines():
+            link = data.split('\t')
+            # link[0]: id (from), links[1]: id (to)
+            if link[0] in links:
+                links[link[0]].add(link[1])
+            else:
+                links[link[0]] = {link[1]}
+    return pages, links;
+
+
+#Returns page id from page name
+def find_page_id(pages, links):
+    for k, v in pages.items():
+        if v == 'Google':
+            print('Start_id Google', k)
+            start_id = k;
+        if v == 'じゃんけん':
+            end_id = k;
+            print('end_id = ', end_id)
+    return start_id, end_id;
+
+
+#Returns connected pages
+def list_of_connected(links, page_id):
+    for k, v in links.items():
+        if k == page_id:
+            connected = list(v)
+    return connected
+
+
+#Examine whether it is the page looking for
+def find_end_page(connected, end_id):
+    return (end_id in connected)
+
+
+#
+def find_connected_page(pages, links, start_id, end_id):
+    Q = [start_id]
+    print('Q = ',Q)
+    while (len(Q) != 0):
+        page_id = Q.pop(-1)
+        print('Q_poped = ',Q)
+        print('page_id = ',page_id)
+        connect = list_of_connected(links, page_id)
+        print('connect = ', connect)
+        if(find_end_page(connect, end_id) == True):
+            print("found!!")
+            break;
+        else:
+            print("not found.....")
+            while(len(connect) != 0):
+                Q.insert(0, connect.pop())
+        print('Q1 = ',Q)
+
+
+def main():
+    (pages, links) = open_file()
+    (start_id, end_id) =  find_page_id(pages, links)
+    find_connected_page(pages, links, start_id, end_id)
+
+
+if __name__ == '__main__':
+    main()
