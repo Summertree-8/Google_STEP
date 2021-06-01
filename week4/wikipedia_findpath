@@ -28,7 +28,7 @@ def find_page_id(pages, links):
         if v == 'Google':
             print('Start_id Google', k)
             start_id = k;
-        if v == 'じゃんけん':
+        if v == '情報':
             end_id = k;
             print('end_id = ', end_id)
     return start_id, end_id;
@@ -93,10 +93,10 @@ def find_connected_page(pages, links, start_id, end_id):
 #         print("pre_connected = ",pre_connected)
 #         print(connected)
 #         print('Q_after = ',Q)
-    show_path(path, page_id, start_id, end_id)
+    show_path(pages, path, page_id, start_id, end_id)
 
 
-def show_path(path, page_id, start_id, end_id):
+def show_path(pages, path, page_id, start_id, end_id):
     path2 = []
     path2.append(end_id)
     for i in path:
@@ -108,7 +108,16 @@ def show_path(path, page_id, start_id, end_id):
                 break;
     path2.insert(0, start_id)
     print("path2 = ",path2)
+    while (len(path2) != 0):
+        print(find_pagename(pages, path2.pop(0)))
 
+
+def find_pagename(pages, iddd):
+    for k, v in pages.items():
+        if k == iddd:
+#             print('pagename = ', v)
+            pagename = v;
+    return pagename;
 
 
 def main():
