@@ -28,7 +28,7 @@ def find_page_id(pages, links):
         if v == 'Google':
             print('Start_id Google', k)
             start_id = k;
-        if v == 'カレー':
+        if v == 'じゃんけん':
             end_id = k;
             print('end_id = ', end_id)
     return start_id, end_id;
@@ -59,16 +59,16 @@ def find_connected_page(pages, links, start_id, end_id):
     path = {}
     pre_connected = []
     toppage = start_id
-    print('Q = ',Q)
+#     print('Q = ',Q)
     while (len(Q) != 0):
         #Qの最後取り出す
         page_id = Q.pop(-1)
-        print('Q_poped = ',Q)
-        print('page_id = ',page_id)
+#         print('Q_poped = ',Q)
+#         print('page_id = ',page_id)
 
         #page_idが見ているページのidたち
         connected = list_of_connected(links, page_id)
-        print('connected = ', connected)
+#         print('connected = ', connected)
 
         #visitedに追加
         visited.append(page_id)
@@ -85,13 +85,29 @@ def find_connected_page(pages, links, start_id, end_id):
                 if(visited_pages(visited, connected[-1]) != True):
 #                     print(page_id)
 #                     print(connected[-1])
+                    path.setdefault(page_id, []).append(connected[-1])
+#                     print('path = ',path)
                     Q.insert(0, connected.pop())
                 else:
                     connected.pop()
 #         print("pre_connected = ",pre_connected)
 #         print(connected)
-        print('Q_after = ',Q)
+#         print('Q_after = ',Q)
+    show_path(path, page_id, start_id, end_id)
 
+
+def show_path(path, page_id, start_id, end_id):
+    path2 = []
+    path2.append(end_id)
+    for i in path:
+        if(page_id in  path[i]):
+            path2.insert(0, i)
+            page_id = i
+            if(page_id == start_id):
+
+                break;
+    path2.insert(0, start_id)
+    print("path2 = ",path2)
 
 
 
