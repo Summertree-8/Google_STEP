@@ -50,9 +50,10 @@ def visited_pages(visited, page_id):
 Shows shortest route from start page to end page
 |Q|: queue used for BFS
 |visited|: list of visited page ids
-|connected|: list of page ids connected from page_id
-|path|: {key = id of page x : value = ids connected from page_id
-|route|: shortest route rom start page to end page
+|page_id|: id of page being assessed
+|connected|: list of page ids connected from "page_id"
+|path|: {key = id of page x : value = page ids connected from page x}
+|route|: shortest route from start page to end page
 
 '''
 def find_connected_page(pages, links, start_id, end_id):
