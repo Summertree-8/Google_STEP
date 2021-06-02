@@ -31,30 +31,31 @@ not found.....
 `find_start_end_id(pages)`  
 スタートのページと見つけたいのページのidを返す  
 `list_of_connected(links, page_id)`  
-page_idとつながっているページのidをリストで全て返す  
+page_idとつながっている(指している)ページのidをリストで全て返す  
 `visited_pages(visited, page_id)`  
-既に調べたページのidを保持する。  
+既に調べたページのidを保持する  
 ※ ページ最後の[問題点](#問題点)参照  
 `find_connected_page(pages, links, start_id, end_id)`    
 Q 内の要素を最後から順番にwhile文で繰り返す。  
 探しているページが見つかった場合(page_idとend_idが一致した場合)：  
-foundを表示してwhile文を抜ける。
+found!を表示してwhile文を抜ける。
 探しているページではなかった場合：  
 　　既にすべてのページを探している場合  
 　　→　not found.....を表示して終了する  
 　　まだ探していないページがある場合　　  
 　　→　page_idが指しているページがすでに調べたページでなければ、pathに保存、Qの最初に追加。  
-
 `find_route(pages, path, page_id, start_id, end_id)`  
-経路を表示する  
+最短経路を見つける。  
 pathには{key:[values]}が保持されている。  
-end_idからstart_idに一致するまでvalue->keyをたどる。  
-1つ前のvalueのkeyを、valueから見つけるということを繰り返す。  
+end_idからstart_idに一致するまでpathをたどる。  
+1つ前のvalueのkeyを、valueから見つけ、そのvalueのkeyをvalueの中から見つける...ということを繰り返す。  
+最終的にstart_idが指しているidのいずれかにたどり着く。  
 `find_pagename(pages, pageid)`  
 idからそのidのページのタイトルを返す。    
 ### 問題点  
-・計算時間がとても長い（30分くらいかかりました）  
-・pagesに存在しないページ名を指定するときに起こるエラーをうまく処理できなかった  
-・実行回によっては最短経路の表示が予想通りではない（飛ばされている、被るなど。。。）  
-  関数`visited_pages`を`find_connected_page`に入れようとしたときにも最短経路がうまく表示されなくなった  
+・実行時間がとても長い（30分くらいかかりました）  
+・pagesに存在しないページ名を指定したときに起こるエラーをうまく処理できなかった  
+・実行回によっては最短経路の表示が予想通りではない  
+  (飛ばされている、被るなど。。。）  
+  (関数`visited_pages`を`find_connected_page`に入れようとしたときにも最短経路がうまく表示されなくなった)  
 
