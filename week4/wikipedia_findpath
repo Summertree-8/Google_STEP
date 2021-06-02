@@ -76,13 +76,13 @@ def find_connected_page(pages, links, start_id, end_id):
                     Q.insert(0, connected.pop())
                 else:
                     connected.pop()
-    route = show_path(pages, path, page_id, start_id, end_id)
+    route = find_route(pages, path, page_id, start_id, end_id)
     while (len(route) != 0):
         print(find_pagename(pages, route.pop(0)))
 
 
 #Finds shortest route from path
-def show_path(pages, path, page_id, start_id, end_id):
+def find_route(pages, path, page_id, start_id, end_id):
     route = []
     route.append(end_id)
     for i in path:
