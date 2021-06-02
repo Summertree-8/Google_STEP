@@ -5,13 +5,13 @@ def open_file():
     pages = {}
     links = {}
 
-    with open('data/pages.txt' ,encoding="utf8", errors='ignore') as f:
+    with open('data/pages_small.txt' ,encoding="utf8", errors='ignore') as f:
         for data in f.read().splitlines():
             page = data.split('\t')
             # page[0]: id, page[1]: title
             pages[page[0]] = page[1]
 
-    with open('data/links.txt' ,encoding="utf8", errors='ignore') as f:
+    with open('data/links_small.txt' ,encoding="utf8", errors='ignore') as f:
         for data in f.read().splitlines():
             link = data.split('\t')
             # link[0]: id (from), links[1]: id (to)
@@ -19,23 +19,20 @@ def open_file():
                 links[link[0]].add(link[1])
             else:
                 links[link[0]] = {link[1]}
-    print('opened filess')
     return pages, links;
 
 
-#Returns page id from page name
-def find_page_id(pages, links):
+#Returns page id of start page and end page
+def find_start_end_id(pages):
     for k, v in pages.items():
         if v == 'Google':
-            print('Start_id Google', k)
             start_id = k;
-        if v == '渋谷':
+        if v == 'カメラ':
             end_id = k;
-            print('end_id = ', end_id)
     return start_id, end_id;
 
 
-#Returns connected pages
+#Returns connected pages of page_id
 def list_of_connected(links, page_id):
     connect = []
     for k, v in links.items():
@@ -44,34 +41,31 @@ def list_of_connected(links, page_id):
     return connect
 
 
-#Examine whether it is the page looking for
-def find_end_page(connected, end_id):
+#Checks whether it is the page looking for
+def is_end_page(connected, end_id):
     return (end_id in connected)
 
 
+#Checkes whether page_id is in visited
 def visited_pages(visited, page_id):
     return(page_id in visited)
 
 
 #
 def find_connected_page(pages, links, start_id, end_id):
-    print(pages)
     Q = [start_id]
     visited = []
     path = {}
     while (len(Q) != 0):
         #Qの最後取り出す
         page_id = Q.pop(-1)
-
         #page_idが見ているページのidたち
         connected = list_of_connected(links, page_id)
-
         #visitedに追加
         visited.append(page_id)
-#         print('visited = ',visited)
-
         #目標のページが見つかった
-        if(find_end_page(page_id, end_id) == True):
+#         if(is_end_page(page_id, end_id) == True):
+        if(page_id == end_id):
             print("found!!")
             break;
         else:
@@ -85,35 +79,35 @@ def find_connected_page(pages, links, start_id, end_id):
                     Q.insert(0, connected.pop())
                 else:
                     connected.pop()
-
     show_path(pages, path, page_id, start_id, end_id)
 
 
+#Prints shortest route from start page to end page
 def show_path(pages, path, page_id, start_id, end_id):
-    path2 = []
-    path2.append(end_id)
+    route = []
+    route.append(end_id)
     for i in path:
         if(page_id in  path[i]):
-            path2.insert(0, i)
+            route.insert(0, i)
             page_id = i
             if(page_id == start_id):
-
                 break;
-    path2.insert(0, start_id)
-    while (len(path2) != 0):
-        print(find_pagename(pages, path2.pop(0)))
+    route.insert(0, start_id)
+    while (len(route) != 0):
+        print(find_pagename(pages, route.pop(0)))
 
 
-def find_pagename(pages, iddd):
+#Returns page name from pageid
+def find_pagename(pages, pageid):
     for k, v in pages.items():
-        if k == iddd:
-            pagename = v;
-    return pagename;
+        if k == pageid:
+            page_name = v;
+    return page_name;
 
 
 def main():
     (pages, links) = open_file()
-    (start_id, end_id) =  find_page_id(pages, links)
+    (start_id, end_id) = find_start_end_id(pages)
     find_connected_page(pages, links, start_id, end_id)
 
 
