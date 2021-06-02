@@ -27,7 +27,7 @@ def find_start_end_id(pages):
     for k, v in pages.items():
         if v == 'Google':
             start_id = k;
-        if v == 'カメラ':
+        if v == 'アイスクリーム':
             end_id = k;
     return start_id, end_id;
 
@@ -41,30 +41,28 @@ def list_of_connected(links, page_id):
     return connect
 
 
-#Checks whether it is the page looking for
-def is_end_page(connected, end_id):
-    return (end_id in connected)
-
-
 #Checkes whether page_id is in visited
 def visited_pages(visited, page_id):
     return(page_id in visited)
 
 
-#
+'''
+Shows shortest route from start page to end page
+|Q|: queue used for BFS
+|visited|: list of visited page ids
+|connected|: list of page ids connected from page_id
+|path|: {key = id of page x : value = ids connected from page_id
+|route|: shortest route rom start page to end page
+
+'''
 def find_connected_page(pages, links, start_id, end_id):
     Q = [start_id]
     visited = []
     path = {}
     while (len(Q) != 0):
-        #Qの最後取り出す
         page_id = Q.pop(-1)
-        #page_idが見ているページのidたち
         connected = list_of_connected(links, page_id)
-        #visitedに追加
         visited.append(page_id)
-        #目標のページが見つかった
-#         if(is_end_page(page_id, end_id) == True):
         if(page_id == end_id):
             print("found!!")
             break;
@@ -72,17 +70,18 @@ def find_connected_page(pages, links, start_id, end_id):
             if(len(visited) == len(pages)):
                 print("not found.....")
                 exit(1)
-            #visitedで無ければQの最初に追加
             while(len(connected) != 0):
                 if(visited_pages(visited, connected[-1]) != True):
                     path.setdefault(page_id, []).append(connected[-1])
                     Q.insert(0, connected.pop())
                 else:
                     connected.pop()
-    show_path(pages, path, page_id, start_id, end_id)
+    route = show_path(pages, path, page_id, start_id, end_id)
+    while (len(route) != 0):
+        print(find_pagename(pages, route.pop(0)))
 
 
-#Prints shortest route from start page to end page
+#Finds shortest route from path
 def show_path(pages, path, page_id, start_id, end_id):
     route = []
     route.append(end_id)
@@ -93,8 +92,7 @@ def show_path(pages, path, page_id, start_id, end_id):
             if(page_id == start_id):
                 break;
     route.insert(0, start_id)
-    while (len(route) != 0):
-        print(find_pagename(pages, route.pop(0)))
+    return route
 
 
 #Returns page name from pageid
