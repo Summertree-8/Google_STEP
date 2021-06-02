@@ -33,8 +33,9 @@ not found.....
 `list_of_connected(links, page_id)`  
 page_idとつながっているページのidをリストで全て返す  
 `visited_pages(visited, page_id)`  
-
-`find_connected_page(pages, links, start_id, end_id)`  
+既に調べたページのidを保持する。  
+※ ページ最後の[問題点](#問題点)参照  
+`find_connected_page(pages, links, start_id, end_id)`    
 Q 内の要素を最後から順番にwhile文で繰り返す。  
 探しているページが見つかった場合(page_idとend_idが一致した場合)：  
 foundを表示してwhile文を抜ける。
@@ -48,9 +49,12 @@ foundを表示してwhile文を抜ける。
 経路を表示する  
 pathには{key:[values]}が保持されている。  
 end_idからstart_idに一致するまでvalue->keyをたどる。  
-1つ前のvalueのkeyを、valueから見つけるということを繰り返す。
+1つ前のvalueのkeyを、valueから見つけるということを繰り返す。  
 `find_pagename(pages, pageid)`  
 idからそのidのページのタイトルを返す。    
-### 計算量について
-
+### 問題点  
+・計算時間がとても長い（30分くらいかかりました）  
+・pagesに存在しないページ名を指定するときに起こるエラーをうまく処理できなかった  
+・実行回によっては最短経路の表示が予想通りではない（飛ばされている、被るなど。。。）  
+  関数`visited_pages`を`find_connected_page`に入れようとしたときにも最短経路がうまく表示されなくなった  
 
