@@ -5,13 +5,13 @@ def open_file():
     pages = {}
     links = {}
 
-    with open('data/pages_small.txt' ,encoding="utf8", errors='ignore') as f:
+    with open('data/pages.txt' ,encoding="utf8", errors='ignore') as f:
         for data in f.read().splitlines():
             page = data.split('\t')
             # page[0]: id, page[1]: title
             pages[page[0]] = page[1]
 
-    with open('data/links_small.txt' ,encoding="utf8", errors='ignore') as f:
+    with open('data/links.txt' ,encoding="utf8", errors='ignore') as f:
         for data in f.read().splitlines():
             link = data.split('\t')
             # link[0]: id (from), links[1]: id (to)
@@ -27,7 +27,7 @@ def find_start_end_id(pages):
     for k, v in pages.items():
         if v == 'Google':
             start_id = k;
-        if v == 'アイスクリーム':
+        if v == '渋谷':
             end_id = k;
     return start_id, end_id;
 
