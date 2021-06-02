@@ -8,7 +8,8 @@ Google”から”渋谷”を（最短で）たどる経路を探す。
 テスト環境：python3.9.5  
 ```
 python3 wikipedia_findpath.py      
-```
+```  
+※30分以上かかりました、、！
 
 ## 出力例
 ```
