@@ -54,7 +54,6 @@ Shows shortest route from start page to end page
 |connected|: list of page ids connected from "page_id"
 |path|: {key = id of page x : value = page ids connected from page x}
 |route|: shortest route from start page to end page
-
 '''
 def find_connected_page(pages, links, start_id, end_id):
     Q = [start_id]
