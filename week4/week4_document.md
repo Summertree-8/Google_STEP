@@ -45,6 +45,13 @@ found!を表示してwhile文を抜ける。
 　　→　not found.....を表示して終了する  
 　　まだ探していないページがある場合　　  
 　　→　page_idが指しているページがすでに調べたページでなければ、pathに保存、Qの最初に追加。  
+　　```path.setdefault(page_id, []).append(connected[-1])```   
+　　**setdefault(key[, default])**  
+　　もし、 key が辞書に存在すれば、その値を返します。  
+　　そうでなければ、値を default として key を挿入し、 default を返します。 default のデフォルトは None です。  
+　　(Python 3.9.4 ドキュメント　より)  
+　　辞書pathが、１つのkeyに対して複数のvalueを持つことができるようにするために使いました。  
+　　(office hourで話していたところ追加しました、！）  
 - `find_route(pages, path, page_id, start_id, end_id)`  
 最短経路を見つける。  
 pathには{key:[values]}が保持されている。  
