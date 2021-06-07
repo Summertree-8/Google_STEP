@@ -59,8 +59,13 @@ def swap_cross(cities, city1, city2, city3, city4):
     city3 = tmp
 
 
-def solve():
-    return
+def solve(cities):
+    N = len(cities)
+    while not no_cross:
+        find_cross(cities, city1, city2, city3, city4):
+        swap_cross(cities, city1, city2, city3, city4):
+
+    return tour
 
 
 def test_find_cross(cities,tour):
@@ -78,6 +83,7 @@ def test_find_cross(cities,tour):
 
 if __name__ == '__main__':
     assert len(sys.argv) > 1
-    tour = greedy(read_input(sys.argv[1]))
+    tourrrrrr = greedy(read_input(sys.argv[1]))
+    tour = solve()
     print_tour(tour)
     test_find_cross(read_input(sys.argv[1]), tour)
