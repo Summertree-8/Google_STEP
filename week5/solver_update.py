@@ -4,6 +4,7 @@ import sys
 import math
 
 from common import print_tour, read_input  # @UnresolvedImport
+from pickle import TRUE
 
 
 def distance(city1, city2):
@@ -28,6 +29,7 @@ def greedy(cities):
         unvisited_cities.remove(next_city)
         tour.append(next_city)
         current_city = next_city
+        print_tour(tour)
     return tour
 
 
@@ -59,10 +61,18 @@ def swap_cross(cities, city1, city2, city3, city4):
     city3 = tmp
 
 
-def solve(cities):
+def is_cross(cities, tour):
     N = len(cities)
-    while not no_cross:
-        find_cross(cities, city1, city2, city3, city4):
+    for i in range(N):
+        for j in range(i, N):
+            if find_cross(cities, , , , ):
+                return True
+    return False
+
+
+def solve(cities):
+    while is_cross:
+        find_cross(cities, , , , )
         swap_cross(cities, city1, city2, city3, city4):
 
     return tour
@@ -85,5 +95,4 @@ if __name__ == '__main__':
     assert len(sys.argv) > 1
     tourrrrrr = greedy(read_input(sys.argv[1]))
     tour = solve()
-    print_tour(tour)
     test_find_cross(read_input(sys.argv[1]), tour)
