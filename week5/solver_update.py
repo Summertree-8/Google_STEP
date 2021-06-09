@@ -91,28 +91,29 @@ def is_cross(cities, tour):
     for i in range(N):
         print("hey")
         print(i)
-        for j in range(N):
+#         j = i + 2
+#         if i == N-2:
+#                 x = N-1
+#                 y = N
+#                 z = 0
+#         elif i == N-1:
+#                 x = N
+#                 y = 0
+#                 z = 1
+#         elif i == N:
+#                 x = 0
+#                 y = 1
+#                 z = 2
+#         else:
+#                 x = i + 1
+#                 y = j
+#                 z = j + 1
+#         print("x = ", x)
+#         print("y = ", y)
+#         print("z = ", z)
+        for j in range(i+2 , i-2):
             print("hello")
-            if i == N-2:
-                x = N-1
-                y = N
-                z = 0
-            elif i == N-1:
-                x = N
-                y = 0
-                z = 1
-            elif i == N:
-                x = 0
-                y = 1
-                z = 2
-            else:
-                x = i + 1
-                y = j
-                z = j + 1
-            print("x = ", x)
-            print("y = ", y)
-            print("z = ", z)
-            if find_cross(tour, i, x, y, z):
+            if find_cross(tour, i, i + 1, j, j+1):
                 return True
     return False
 
