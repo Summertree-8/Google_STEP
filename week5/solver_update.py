@@ -2,8 +2,31 @@
 
 import sys
 import math
+from idlelib.idle_test.test_history import line1
 
-from common import print_tour, read_input  # @UnresolvedImport
+# from common import print_tour, read_input  # @UnresolvedImport
+
+
+def read_input(filename):
+    with open(filename) as f:
+        cities = []
+        for line in f.readlines()[1:]:  # Ignore the first line.
+            xy = line.split(',')
+            coordinates = [float(xy[0]), float(xy[1])]
+            cities.append(coordinates)
+#             print("hehehe",type(cities[0]))
+#             print("cities")
+#             print(cities)
+#         print("lll", type(cities[1]))
+        return cities
+
+
+def format_tour(tour):
+    return 'index\n' + '\n'.join(map(str, tour))
+
+
+def print_tour(tour):
+    print(format_tour(tour))
 
 
 def distance(city1, city2):
@@ -33,15 +56,6 @@ def greedy(cities):
 
 
 def find_cross(cities, city1, city2, city3, city4):
-    print(cities[city1][0])
-    print(cities[city1][1])
-    print(cities[city2][0])
-    print(cities[city2][1])
-    print(cities[city3][0])
-    print(cities[city3][1])
-    print(cities[city4][0])
-    print(cities[city4][1])
-
     '''
     Equation of a line between city1 and city2
     y = (city1_y - city2_y)/(city1_x - city2_x)・x + city1_y - (city1_y - city2_y)/(city1_x - city2_x)・city1_x
@@ -72,76 +86,71 @@ def find_cross(cities, city1, city2, city3, city4):
     d = (cities[city3][0] - cities[city4][0]) * (cities[city2][1] - cities[city3][1])\
     + (cities[city3][1] - cities[city4][1]) * (cities[city3][0] - cities[city2][0])
 
-    print("a = ",a)
-    print("b = ",b)
-    print("c = ",c)
-    print("d = ",d)
-
     return (a*b < 0) and (c*d < 0)
 
 
-def swap_cross(cities, city1, city2, city3, city4):
-    tmp = city2
-    city2 = city3
-    city3 = tmp
+line1 = 0
+line2 = 0
 
 
 def is_cross(cities, tour):
+    print("test iscross")
     N = len(cities)
     for i in range(N):
         print("hey")
         print(i)
-#         j = i + 2
-#         if i == N-2:
-#                 x = N-1
-#                 y = N
-#                 z = 0
-#         elif i == N-1:
-#                 x = N
-#                 y = 0
-#                 z = 1
-#         elif i == N:
-#                 x = 0
-#                 y = 1
-#                 z = 2
-#         else:
-#                 x = i + 1
-#                 y = j
-#                 z = j + 1
-#         print("x = ", x)
-#         print("y = ", y)
-#         print("z = ", z)
-        for j in range(i+2 , i-2):
-            print("hello")
-            if find_cross(tour, i, i + 1, j, j+1):
+        for j in range(N):
+            print("1-1")
+            if j > i:
+                if abs(j -i) <= 2:
+                    print("1-2")
+                    continue
+            elif j <= i:
+                if abs(j -i) <= 1:
+                    print("1-3")
+                    continue
+            elif i == 0 and j == N-1:
+                print("1-4")
+                continue
+#             elif i == 1 and j == 0:
+#                 continue
+            elif i == N-1 and j == 0:
+                print("1-5")
+                continue
+            if find_cross(cities, i, i + 1, j, j+1):
+                line1 = i
+                line2 = j
                 return True
     return False
 
 
-# def solve(cities, tour):
-#     while is_cross:
-#         find_cross(cities, , , , )
-#         swap_cross(cities, city1, city2, city3, city4):
-#
-#     return tour
+def swap_cross(cities, tour, city1, city2, city3, city4):
+    path = []
+    for i in range(city4 - city1):
+        path.append(tour[i])
+    for i in range(1,len(path)/2):
+        tmp = path[i]
+        path[i] = path[len(path)-1-i]
+        path[len(path)-1-i]  =tmp
 
 
-# def test_find_cross(cities,tour):
-#     print("test_find_cross")
-#     print(tour[8])
-#     print(tour[9])
-#     print(tour[10])
-#     print(tour[11])
-#     print(tour[12])
-#     print(tour[13])
-#     print(tour[15])
-#     print(tour[0])
-#     print(find_cross(cities, tour[8], tour[9], tour[10], tour[11]))
-#     print(find_cross(cities ,tour[12], tour[13], tour[15], tour[0]))
+def solve(cities, tour):
+    while is_cross(cities, tour):
+        find_cross(cities, line1, line1 + 1, line2, line2+1)
+        swap_cross(cities, city1, city2, city3, city4):
+
+    return tour
+
+
+def test_find_cross(cities,tour):
+    print("test_find_cross")
+    print(find_cross(cities, tour[8], tour[9], tour[10], tour[11]))
+    print(find_cross(cities ,tour[12], tour[13], tour[15], tour[0]))
 
 if __name__ == '__main__':
     assert len(sys.argv) > 1
     tour = greedy(read_input(sys.argv[1]))
-    print(is_cross(read_input(sys.argv[1]), tour))
 #     tour = solve()
-#     test_find_cross(read_input(sys.argv[1]), tour)
+    test_find_cross(read_input(sys.argv[1]), tour)
+    print("is cross result:",is_cross(read_input(sys.argv[1]), tour))
+
