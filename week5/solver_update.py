@@ -111,10 +111,21 @@ def swap_cross(tour, city1_index, city4_index):
     tour[city1_index+1 : city4_index] = path
 
 
+def culc_distance(tour,cities):
+    dist = 0
+    for i in range(len(tour)):
+        print(i)
+        if i == len(tour)-1:
+            dist += distance(cities[tour[i]], cities[tour[0]])
+        else:
+            dist += distance(cities[tour[i]], cities[tour[i+1]])
+    return dist
+
+
 if __name__ == '__main__':
     assert len(sys.argv) > 1
     tour = greedy(read_input(sys.argv[1]))
     print_tour(tour)
     tour = solve_cross(read_input(sys.argv[1]), tour)
     print_tour(tour)
-
+    print(culc_distance(tour,read_input(sys.argv[1])))
