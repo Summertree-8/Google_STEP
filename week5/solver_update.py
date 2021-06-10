@@ -44,7 +44,6 @@ def greedy(cities):
         unvisited_cities.remove(next_city)
         tour.append(next_city)
         current_city = next_city
-    print_tour(tour)
     return tour
 
 
@@ -83,57 +82,39 @@ def find_cross(cities, city1, city2, city3, city4):
 
 
 def solve_cross(cities, tour):
-    print("test solve_cross")
     N = len(tour)
-    #tourに入っている順で見たい
     for i in range(N-1):
-        print("-----------i = ",i)
         for j in range(N-1):
-            print("j = ",j)
             if j > i:
                 if abs(j -i) <= 1:
-                    print("1-2")
                     continue
             elif j <= i:
                 if abs(j -i) <= 1:
-                    print("1-3")
                     continue
             elif i == 0 and j == N-1:
-                print("1-4")
                 continue
             elif i == N-1 and j == 0:
-                print("1-5")
                 continue
             if find_cross(cities, tour[i], tour[i + 1], tour[j], tour[j+1]):
-                print("find cross")
                 swap_cross(tour, i, j+1)
-                print("swaped cross")
     return tour
 
 
 def swap_cross(tour, city1_index, city4_index):
     path = []
     for i in range(city1_index+1, city4_index):
-        print("sw_i = ", i)
         path.append(tour[i])
-        print("path1",path)
     for i in range(math.floor(len(path)/2)):
-        print("swap")
         tmp = path[i]
         path[i] = path[len(path)-1-i]
         path[len(path)-1-i]  = tmp
-        print("path2",path)
     tour[city1_index+1 : city4_index] = path
 
-def test_find_cross(cities,tour):
-    print("test_find_cross")
-    print(find_cross(cities, tour[8], tour[9], tour[10], tour[11]))
-    print(find_cross(cities ,tour[12], tour[13], tour[15], tour[0]))
 
 if __name__ == '__main__':
     assert len(sys.argv) > 1
     tour = greedy(read_input(sys.argv[1]))
-    test_find_cross(read_input(sys.argv[1]), tour)
+    print_tour(tour)
     tour = solve_cross(read_input(sys.argv[1]), tour)
     print_tour(tour)
 
