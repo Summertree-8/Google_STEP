@@ -81,6 +81,7 @@ def find_cross(cities, city1, city2, city3, city4):
     return (a*b < 0) and (c*d < 0)
 
 
+# Compares each two lines and swap if lines are crossed
 def solve_cross(cities, tour):
     N = len(tour)
     for i in range(N-1):
@@ -101,6 +102,7 @@ def solve_cross(cities, tour):
 
 
 def swap_cross(tour, city1_index, city4_index):
+    # Save crossed part temporarily
     path = []
     for i in range(city1_index+1, city4_index):
         path.append(tour[i])
