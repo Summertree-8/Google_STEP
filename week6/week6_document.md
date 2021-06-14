@@ -22,28 +22,6 @@ simple_malloc -> first fit(sample code)
 ### Best fit
 ```
 Challenge 1: simple malloc => my malloc
-Time: 33 ms => 17 ms
-Utilization: 70% => 70%
-==================================
-Challenge 2: simple malloc => my malloc
-Time: 18 ms => 28 ms
-Utilization: 40% => 39%
-==================================
-Challenge 3: simple malloc => my malloc
-Time: 114 ms => 18 ms
-Utilization: 7% => 4%
-==================================
-Challenge 4: simple malloc => my malloc
-Time: 35138 ms => 68 ms
-Utilization: 16% => 6%
-==================================
-Challenge 5: simple malloc => my malloc
-Time: 25797 ms => 67 ms
-Utilization: 15% => 6%
-==================================
-```
-```
-Challenge 1: simple malloc => my malloc
 Time: 50 ms => 1431 ms
 Utilization: 70% => 70%
 ==================================
@@ -88,5 +66,10 @@ Utilization: 15% => 6%
 ==================================
 ```
 ## 改善できそうなところ
-・二分木  
+・二分木を使うことで探索時間を短縮できそう    
 ・
+```
+my_metadata_t *min_slot = NULL;
+    my_metadata_t *prev_min_slot = NULL;
+```
+を`metadata`で初期化するとコアダンプや無限ループぽくなる
