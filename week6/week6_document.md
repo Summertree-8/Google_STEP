@@ -3,19 +3,20 @@
     
 ## 概要
 simple_malloc.cのFirst fitのlinked listの実装をもとに、best fitにする。  
-First fitが一番最初に見つかった十分なサイズのメモリをとるのに対して、best fitでは要求されたサイズを満たすもののうち最も小さいメモリを選択する。また、比較としてWorst fitも試してみました。  
+また、比較としてWorst fitも試してみました。  
 b_malloc.c -> best fit  
 w_malloc.c -> worst fit  
 simple_malloc -> first fit(sample code)  
 
 ## 方針  
 ### Best fit
-1.もし
+First fitが一番最初に見つかった十分なサイズのメモリをとるのに対して、best fitでは要求されたサイズを満たすもののうち最も小さいメモリを選択する。  
+`min_slot`-> 最小の空き領域
 
 
 ### Worst fit
-
-
+要求されたサイズを満たすもののうち最も大きいメモリを選択する。  
+`max_slot`-> 最大の空き領域
 
 
 ## 実行結果
@@ -42,6 +43,9 @@ Time: 33455 ms => 6014 ms
 Utilization: 15% => 71%
 ==================================
 ```
+Challenge4,5ではメモリ使用率も速度も改善された。
+Challenge3ではメモリ使用率は改善されたが、速度は下がった。  
+
 ### Worstfit  
 ```
 Challenge 1: simple malloc => my malloc
@@ -65,11 +69,12 @@ Time: 24462 ms => 785198 ms
 Utilization: 15% => 6%
 ==================================
 ```
+
 ## 改善できそうなところ
-・二分木を使うことで探索時間を短縮できそう    
+・二分木を使うことで`min_slot`、`max_slot`の探索時間を短縮できそう    
 ・
 ```
 my_metadata_t *min_slot = NULL;
-    my_metadata_t *prev_min_slot = NULL;
+my_metadata_t *prev_min_slot = NULL;
 ```
-を`metadata`で初期化するとコアダンプや無限ループぽくなる
+を`metadata`で初期化するとコアダンプや無限ループぽくなってしまうため、NULLで初期化し後から代入するようにしたが、理由がよくわかりませんでした、、！
