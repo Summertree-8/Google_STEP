@@ -10,7 +10,7 @@ simple_malloc -> first fit(sample code)
 
 ## 方針  
 ### Best fit
-
+1.もし
 
 
 ### Worst fit
@@ -42,5 +42,51 @@ Time: 25797 ms => 67 ms
 Utilization: 15% => 6%
 ==================================
 ```
+```
+Challenge 1: simple malloc => my malloc
+Time: 50 ms => 1431 ms
+Utilization: 70% => 70%
+==================================
+Challenge 2: simple malloc => my malloc
+Time: 42 ms => 812 ms
+Utilization: 40% => 39%
+==================================
+Challenge 3: simple malloc => my malloc
+Time: 524 ms => 950 ms
+Utilization: 7% => 50%
+==================================
+Challenge 4: simple malloc => my malloc
+Time: 45095 ms => 11411 ms
+Utilization: 16% => 71%
+==================================
+Challenge 5: simple malloc => my malloc
+Time: 33455 ms => 6014 ms
+Utilization: 15% => 71%
+==================================
+```
 ### Worstfit  
-
+```
+Challenge 1: simple malloc => my malloc
+Time: 39 ms => 818 ms
+Utilization: 70% => 70%
+==================================
+Challenge 2: simple malloc => my malloc
+Time: 21 ms => 515 ms
+Utilization: 40% => 39%
+==================================
+Challenge 3: simple malloc => my malloc
+Time: 334 ms => 199974 ms
+Utilization: 7% => 3%
+==================================
+Challenge 4: simple malloc => my malloc
+Time: 41172 ms => 983290 ms
+Utilization: 16% => 6%
+==================================
+Challenge 5: simple malloc => my malloc
+Time: 24462 ms => 785198 ms
+Utilization: 15% => 6%
+==================================
+```
+## 改善できそうなところ
+・二分木  
+・
