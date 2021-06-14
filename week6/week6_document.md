@@ -3,16 +3,23 @@
     
 ## 概要
 simple_malloc.cのFirst fitのlinked listの実装をもとに、best fitにする。  
-First fitが一番最初に見つかった十分なサイズのメモリをとるのに対して、best fitでは要求されたサイズを満たすもののうち最も小さいメモリを選択する。
+First fitが一番最初に見つかった十分なサイズのメモリをとるのに対して、best fitでは要求されたサイズを満たすもののうち最も小さいメモリを選択する。また、比較としてWorst fitも試してみました。  
+b_malloc.c -> best fit  
+w_malloc.c -> worst fit  
+simple_malloc -> first fit(sample code)  
 
 ## 方針  
-1.  
+### Best fit
+
+
+
+### Worst fit
 
 
 
 
 ## 実行結果
-Best fit
+### Best fit
 ```
 Challenge 1: simple malloc => my malloc
 Time: 33 ms => 17 ms
@@ -35,5 +42,5 @@ Time: 25797 ms => 67 ms
 Utilization: 15% => 6%
 ==================================
 ```
-
+### Worstfit  
 
