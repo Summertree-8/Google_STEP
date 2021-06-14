@@ -119,21 +119,29 @@ void *my_malloc(size_t size) {
     //return mmap_from_system(4096);
     my_metadata_t *metadata = my_heap.free_head;
     my_metadata_t *prev = NULL;
-    my_metadata_t *min_slot = metadata;
-    // First-fit: Find the first free slot the object fits.
-    /*while (metadata && metadata->size < size) {
-        prev = metadata;
-        metadata = metadata->next;
-    }
-    */
+    my_metadata_t *min_slot = NULL;
+    my_metadata_t *prev_min_slot = NULL;
+
     // Best-fit: Find smallest free slot the object fits.
-    while(metadata && metadata->size < size) {
-        min_slot= metadata;
-        if(min_slot > metadata){
-            min_slot = metadata;
-        }
+    while(metadata){
+        prev = metadata;
         metadata = metadata -> next;
+        if(!metadata){
+            break;
+        }
+        if(metadata->size >= size){
+            if(min_slot == NULL){
+                prev_min_slot = prev;
+                min_slot = metadata;
+            }
+            if(metadata->size < min_slot->size){
+                prev_min_slot = prev;
+                min_slot = metadata;
+            }
+        }
     }
+    prev = prev_min_slot;
+    metadata = min_slot;
 
     if (!metadata) {
         // There was no free slot available. We need to request a new memory region
@@ -205,5 +213,4 @@ void test() {
     // Implement here!
     //assert(1 == 1); /* 1 is 1. That's always true! (You can remove this.) */
 }
-
 
