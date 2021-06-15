@@ -77,4 +77,4 @@ Utilization: 15% => 6%
 my_metadata_t *min_slot = NULL;
 my_metadata_t *prev_min_slot = NULL;
 ```
-を`metadata`で初期化するとコアダンプや無限ループぽくなってしまうため、NULLで初期化し後から代入するようにしたが、理由がよくわかりませんでした、、！
+を`metadata`で初期化するとコアダンプや無限ループぽく(10分経ってもChallenge1の結果が表示されない)なってしまうため、NULLで初期化し後から代入するようにしましたが、理由がよくわかりませんでした、、！
