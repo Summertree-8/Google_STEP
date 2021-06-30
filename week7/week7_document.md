@@ -43,9 +43,22 @@ pythonはインタプリタ言語であることから、実行時に与えら�
 TSP Challenge
 
 ### 方針
-greedy法によって得られた経路において2-opt法を行う。また、スタートの位置を変えて一番短くなる場所を探す。
+greedy法によって得られた経路において2-opt法を行う。また、スタートの位置を変えて一番短くなる場所を探す。  
+[Ruixuan Caoさんのコード](https://github.com/Hisokalalala/step2/blob/master/google-step-tsp/solver_myself.py)の`change_start`を参考にしました。
 
 ### 実行結果
+| input |  | score |
+| :-------------: | :-------------: | :-------------: |
+| input_0.csv | N=5 | 3418.1015 | 
+| input_1.csv | N=8 | 3832.2900| 
+| input_2.csv | N=16 | 5307.5786 | 
+| input_3.csv | N=64 | 10277.6113 |
+| input_4.csv | N=128 | 12291.6998 | 
+| input_5.csv | N=512 | 24389.3280 | 
+| input_6.csv | N=2048 | 47498.5498 | 
+| input_7.csv | N=8192 | - | 
 
+スタートの位置を変えることによる改善はあまり見られませんでした、、。
 
 ### 改善できそうなところ
+・2-optの実装(has_cross、solve_cross、swap_cross)
