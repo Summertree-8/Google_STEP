@@ -1,0 +1,121 @@
+#!/usr/bin/env python3
+
+import sys
+import math
+import random
+
+from common import print_tour, read_input  #@UnresolvedImport
+
+def distance(city1, city2):
+    return math.sqrt((city1[0] - city2[0]) ** 2 + (city1[1] - city2[1]) ** 2)
+
+
+def cal_path_length(cities, tour):
+    N = len(cities)
+    return sum(distance(cities[tour[i]], cities[tour[(i + 1) % N]]) for i in range(N))
+
+
+def greedy(cities):
+    N = len(cities)
+
+    dist = [[0] * N for i in range(N)]
+    for i in range(N):
+        for j in range(i, N):
+            dist[i][j] = dist[j][i] = distance(cities[i], cities[j])
+
+    current_city = 0
+    unvisited_cities = set(range(1, N))
+    tour = [current_city]
+
+    while unvisited_cities:
+        next_city = min(unvisited_cities,
+                        key=lambda city: dist[current_city][city])
+        unvisited_cities.remove(next_city)
+        tour.append(next_city)
+        current_city = next_city
+    return tour
+
+
+def has_cross(cities, city1, city2, city3, city4):
+    a = (cities[city1][0] - cities[city2][0]) * (cities[city3][1] - cities[city1][1])\
+    + (cities[city1][1] - cities[city2][1]) * (cities[city1][0] - cities[city3][0])
+
+    b = (cities[city1][0] - cities[city2][0]) * (cities[city4][1] - cities[city1][1])\
+    + (cities[city1][1] - cities[city2][1]) * (cities[city1][0] - cities[city4][0])
+
+    c = (cities[city3][0] - cities[city4][0]) * (cities[city1][1] - cities[city3][1])\
+    + (cities[city3][1] - cities[city4][1]) * (cities[city3][0] - cities[city1][0])
+
+    d = (cities[city3][0] - cities[city4][0]) * (cities[city2][1] - cities[city3][1])\
+    + (cities[city3][1] - cities[city4][1]) * (cities[city3][0] - cities[city2][0])
+
+    return (a*b < 0) and (c*d < 0)
+
+
+def solve_cross(cities, tour):
+    N = len(tour)
+    for i in range(N-1):
+        for j in range(N-1):
+            if abs(j -i) <= 1:
+                continue
+            if has_cross(cities, tour[i], tour[i + 1], tour[j], tour[j+1]):
+                swap_cross(tour, i, j+1)
+    return tour
+
+
+def swap_cross(tour, left_city_index, right_city_index):
+    path = []
+    for i in range(left_city_index+1, right_city_index):
+        path.append(tour[i])
+    for i in range(math.floor(len(path)/2)):
+        tmp = path[i]
+        path[i] = path[len(path)-1-i]
+        path[len(path)-1-i]  = tmp
+    tour[left_city_index+1 : right_city_index] = path
+
+
+def change_start(cities):
+    N = len(cities)
+    min_tour = []
+    min_path_length = 10**100
+    print(N)
+    if N > 128:
+        random_list = [random.randint(0, N) for i in range(30)]
+        print(random_list)
+        for i in random_list:
+            print(i)
+            temp_tour = greedy(read_input(sys.argv[1]))
+            temp_tour = solve_cross(read_input(sys.argv[1]), temp_tour)
+            temp_path_length = cal_path_length(cities, temp_tour)
+            if temp_path_length < min_path_length:
+                min_tour = temp_tour
+                min_path_length = temp_path_length
+    else:
+        for i in range(N):
+            print(i)
+            temp_tour = greedy(read_input(sys.argv[1]))
+            temp_tour = solve_cross(read_input(sys.argv[1]), temp_tour)
+            temp_path_length = cal_path_length(cities, temp_tour)
+            if temp_path_length < min_path_length:
+                min_tour = temp_tour
+                min_path_length = temp_path_length
+
+    return min_tour
+
+
+def culc_distance(tour,cities):
+    dist = 0
+    for i in range(len(tour)):
+        print(i)
+        if i == len(tour)-1:
+            dist += distance(cities[tour[i]], cities[tour[0]])
+        else:
+            dist += distance(cities[tour[i]], cities[tour[i+1]])
+    return dist
+
+
+if __name__ == '__main__':
+    assert len(sys.argv) > 1
+    tour = change_start(read_input(sys.argv[1]))
+    print(tour)
+    print(culc_distance(tour,read_input(sys.argv[1])))
