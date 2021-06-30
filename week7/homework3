@@ -102,7 +102,7 @@ def change_start(cities):
 def calc_distance(tour,cities):
     dist = 0
     for i in range(len(tour) - 1):
-		dist += distance(cities[tour[1]], cities[tour[i+1]]
+		dist += distance(cities[tour[i]], cities[tour[i+1]]
 	dist += distance(cities[tour[len(tour)-1], cities[tour[0]])
 
     return dist
